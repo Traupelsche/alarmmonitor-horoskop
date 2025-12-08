@@ -7,27 +7,42 @@ function showCurrentClosures(autobahn) {
       return response.json();
     })
     .then(data => {
-      const now = new Date();
-      // Prüfe, ob das Array existiert
-      const closures = Array.isArray(data) ? data : data.closures || [];
-      const active = closures.filter(item => {
-        const start = new Date(item.start);
-        const end = new Date(item.end);
-        return start <= now && end >= now;
-      });
-      // Zeige die Sperrungen im UI an
-      const el = document.getElementById("autobahn-closures");
+      // Die API liefert ein Objekt mit "closure"-Array
+      const closures = Array.isArray(data.closure) ? data.closure : [];
+      // Filtere nur aktuelle Sperrungen (future === false)
+      const active = closures.filter(item => item && item.future === false);
+      // Für jede Autobahn ein eigenes Ausgabefeld
+      const elId = `autobahn-closures-${autobahn}`;
+      let el = document.getElementById(elId);
+      if (!el) {
+        // Falls das Element noch nicht existiert, erstelle es unterhalb von autobahn-closures (Sammelcontainer)
+        const container = document.getElementById("autobahn-closures");
+        if (container) {
+          el = document.createElement("div");
+          el.id = elId;
+          el.style.marginBottom = "1em";
+          container.appendChild(el);
+        }
+      }
       if (el) {
+        el.innerHTML = `<h3>${autobahn}</h3>`;
         if (active.length === 0) {
-          el.textContent = "Keine aktuellen Sperrungen.";
+          el.innerHTML += "Keine aktuellen Sperrungen.";
         } else {
-          el.innerHTML = active.map(item =>
-            `<div>
-              <strong>${item.description || "Sperrung"}</strong><br>
-              Von: ${item.start}<br>
-              Bis: ${item.end}
-            </div>`
-          ).join("<hr>");
+          el.innerHTML += active.map(item => {
+            let beginn = '';
+            let ende = '';
+            if (item.description && item.description.length > 3) {
+              beginn = item.description[1]; // Zeile 2: Beginn
+              ende = item.description[2];   // Zeile 3: Ende
+            }
+            return `<div>
+              <strong>${item.title || "Sperrung"}</strong><br>
+              ${item.subtitle ? item.subtitle + '<br>' : ''}
+              ${beginn ? '<b>' + beginn + '</b><br>' : ''}
+              ${ende ? '<b>' + ende + '</b><br>' : ''}
+            </div>`;
+          }).join("<hr>");
         }
       }
     })
@@ -42,37 +57,6 @@ showCurrentClosures('A5');
 showCurrentClosures('A60');
 showCurrentClosures('A67');
 showCurrentClosures('A671');
-
-// Testdaten für Design-Check
-const testClosures = [
-  {
-    description: "Fahrbahnerneuerung zwischen Wiesbaden und Mainz",
-    start: "2025-12-08T08:00:00Z",
-    end: "2025-12-10T18:00:00Z"
-  },
-  {
-    description: "Brückenarbeiten bei Rüsselsheim",
-    start: "2025-12-07T22:00:00Z",
-    end: "2025-12-09T05:00:00Z"
-  }
-];
-
-// Funktion zum Testen der Anzeige
-function showTestClosures() {
-  const el = document.getElementById("autobahn-closures");
-  if (el) {
-    el.innerHTML = testClosures.map(item =>
-      `<div>
-        <strong>${item.description}</strong><br>
-        Von: ${item.start}<br>
-        Bis: ${item.end}
-      </div>`
-    ).join("<hr>");
-  }
-}
-
-// Zum Testen einfach aufrufen:
-showTestClosures();
 // --- Ende Autobahn App API Beispiel ---
 
 function hashStringToInt(str) {

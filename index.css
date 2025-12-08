@@ -44,6 +44,12 @@ h1 {
     color: #e6edf3;
 }
 
+#autobahn-closures {
+    /* font-size: 25px; */
+    line-height: 1.6;
+    color: #e6edf3;
+}
+
 #feedback {
     background-color: #001E4B;
     padding: 20px;
