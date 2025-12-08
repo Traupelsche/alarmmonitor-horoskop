@@ -10,10 +10,22 @@
 <body>
     <h1>Willkommen auf der Rettungswache Gustavsburg</h1>
     <div class="container">
-        <div class="row g-4 align-items-start">
+        <div class="row align-items-start">
+            <div class="col-12 col-md-12">
+                <div class="alert alert-warning" role="alert">
+                    <strong>Achtung!</strong> Dies ist eine Testumgebung. Alle angezeigten Daten sind fiktiv und dienen nur zu Demonstrationszwecken.
+                </div>
+            </div>
             <div class="col-12 col-md-9">
                 <div id="horoskop">
                     <div id="horoskop-content"></div>
+                </div>
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <!-- <h5 class="card-title">Wichtige Mitteilungen</h5> -->
+                        <ul id="mitteilungen-list" class="list-group list-group-flush"></ul>
+                        <div id="autobahn-closures"></div>
+                    </div>
                 </div>
             </div>
             <div class="col-12 col-md-3 d-flex flex-column align-items-center">

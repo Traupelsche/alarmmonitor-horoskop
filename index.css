@@ -19,6 +19,10 @@ h1 {
   color: #e6edf3; 
 }
 
+.alert {
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 6px;
+}
+
 #horoskop {
     background-color: #001E4B;
     padding: 20px;
@@ -29,6 +33,14 @@ h1 {
 #horoskop-content {
     font-size: 25px;
     line-height: 1.6;
+    color: #e6edf3;
+}
+
+.card {
+    background-color: #001E4B;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
     color: #e6edf3;
 }
 
