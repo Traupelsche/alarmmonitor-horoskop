@@ -11,6 +11,14 @@ function showCurrentClosures(autobahn) {
       const closures = Array.isArray(data.closure) ? data.closure : [];
       // Filtere nur aktuelle Sperrungen (future === false)
       const active = closures.filter(item => item && item.future === false);
+      const relevanteStichwoerter = ["Mainz", "Rüsselsheim", "Wiesbaden", "Darmstadt", "Raunheim", "Groß-Gerau", "Büttelborn", "Bischofsheim", "Mörfelden", "Langen", "Weiterstadt", "Ginsheim-Gustavsburg"];
+      const relevant = active.filter(item =>
+        relevanteStichwoerter.some(kw =>
+          (item.title && item.title.includes(kw)) ||
+          (item.subtitle && item.subtitle.includes(kw)) ||
+          (item.description && item.description.some(line => line.includes(kw)))
+        )
+      );
       // Für jede Autobahn ein eigenes Ausgabefeld
       const elId = `autobahn-closures-${autobahn}`;
       let el = document.getElementById(elId);
@@ -26,10 +34,10 @@ function showCurrentClosures(autobahn) {
       }
       if (el) {
         el.innerHTML = `<h3>${autobahn}</h3>`;
-        if (active.length === 0) {
+        if (relevant.length === 0) {
           el.innerHTML += "Keine aktuellen Sperrungen.";
         } else {
-          el.innerHTML += active.map(item => {
+          el.innerHTML += relevant.map(item => {
             let beginn = '';
             let ende = '';
             if (item.description && item.description.length > 3) {
