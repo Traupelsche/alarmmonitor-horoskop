@@ -1,10 +1,12 @@
-# AlarmMonitor Horoskop
 
-Eine kleine, statische Web-App, die täglich um 05:00 Uhr lokal ein neues, zufälliges Horoskop aus einer CSV-Datei anzeigt. Zusätzlich wird neben dem Horoskop ein QR‑Code angezeigt, der zu einer Feedback-Seite führt.
+# AlarmMonitor Horoskop & Autobahn-Sperrungen
+
+Eine kleine, statische Web-App, die täglich um 05:00 Uhr lokal ein neues, zufälliges Horoskop aus einer CSV-Datei anzeigt. Zusätzlich werden aktuelle Sperrungen auf ausgewählten Autobahnen angezeigt, gefiltert nach für die Rettungswache relevanten Orten. Neben dem Horoskop wird ein QR‑Code angezeigt, der zu einer Feedback-Seite führt.
 
 Einsatzkontext: Diese Seite ist für die Anzeige auf einem Alarmmonitor einer Rettungswache gedacht und wird in einer DIVERA 24/7 Umgebung genutzt.
 
-Hinweis: Dieses Projekt ist ein Spaßprojekt, um Kolleg:innen mit etwas Humor durch den oft fordernden Dienstalltag zu begleiten.
+Hinweis: Dieses Projekt ist ein Spaßprojekt, um Kolleg:innen mit etwas Humor und aktuellen Verkehrsinformationen durch den oft fordernden Dienstalltag zu begleiten.
+
 
 ## Features
 - Tägliche, deterministische Zufallsauswahl aus `horoskop.csv`
@@ -12,17 +14,38 @@ Hinweis: Dieses Projekt ist ein Spaßprojekt, um Kolleg:innen mit etwas Humor du
 - Automatischer Dark-/Light‑Mode via `prefers-color-scheme`
 - QR‑Code neben dem Horoskop, verlinkt auf `feedback.html`
 - Feedback-Seite öffnet das E‑Mail‑Programm mit vorbefülltem Betreff und Nachricht
+- **Anzeige aktueller Sperrungen auf den Autobahnen A3, A5, A60, A67, A671**
+- **Filterung der Sperrungen nach relevanten Orten (z. B. Mainz, Wiesbaden, Rüsselsheim, etc.)**
+
 
 ## Projektstruktur
 ```
 .
-├── index.html         # Startseite (Horoskop + QR-Code)
+├── index.html         # Startseite (Horoskop + QR-Code + Autobahn-Sperrungen)
 ├── index.css          # Styles inkl. Dark-Mode
-├── index.js           # Logik: CSV laden, Auswahl, Auto-Reload, QR setzen
+├── index.js           # Logik: CSV laden, Auswahl, Auto-Reload, QR setzen, Sperrungen abrufen und filtern
 ├── horoskop.csv       # Datenquelle (Überschrift;Text)
 ├── feedback.html      # Feedback-Formular (mailto:)
 └── feedback.css       # Styles für Feedback-Seite
 ```
+## Sperrungsanzeige & Filterung
+
+Die App ruft aktuelle Sperrungen von der offiziellen Autobahn-API für die Autobahnen A3, A5, A60, A67 und A671 ab. Es werden nur Sperrungen angezeigt, die für die Rettungswache relevant sind. Die Relevanz wird anhand von Ortsnamen und Anschlussstellen im Titel, Untertitel oder der Beschreibung der Sperrung geprüft.
+
+**Beispiel für relevante Orte:**
+
+```
+const relevanteStichwoerter = [
+  "Mainz", "Rüsselsheim", "Wiesbaden", "Darmstadt", "Raunheim", "Groß-Gerau",
+  "Büttelborn", "Bischofsheim", "Mörfelden", "Langen", "Weiterstadt", "Ginsheim-Gustavsburg"
+];
+```
+
+Nur Sperrungen, die einen dieser Begriffe enthalten, werden angezeigt. Die Anzeige erfolgt je Autobahn in einem eigenen Bereich.
+
+**Angezeigte Informationen pro Sperrung:**
+- Titel und Untertitel der Sperrung
+- Beginn und Ende (aus der Beschreibung, hervorgehoben)
 
 ## CSV-Format
 - Trennzeichen: Semikolon `;`
@@ -35,6 +58,7 @@ Beispiel:
 Tageshoroskop;Heute ist euer Tag! Zumindest bis der Melder geht.
 Spruch des Tages;Ein guter Tag, um den Kollegen daran zu erinnern, dass 'gleich zurück' relativ ist.
 ```
+
 
 ## Funktionsweise der Auswahl
 - Die Auswahl ist „willkürlich“, aber pro Tag stabil (deterministisch)
