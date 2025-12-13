@@ -1,27 +1,3 @@
-[id^="autobahn-closures-"]:not(:last-child) {
-    border-right: 2px solid #e6edf3;
-    margin-right: 8px;
-    padding-right: 12px;
-}
-/* Autobahn-Sperrungen nebeneinander */
-#autobahn-closures {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    justify-content: center;
-    align-items: flex-start;
-    margin-top: 24px;
-}
-
-[id^="autobahn-closures-"] {
-    min-width: 220px;
-    max-width: 320px;
-    flex: 1 1 220px;
-    background: none;
-    border-radius: 0;
-    box-shadow: none;
-    padding: 0;
-}
 /* html { 
   color-scheme: dark;
 } */
@@ -33,14 +9,16 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    /* align-items: flex-start; */
+    /* justify-content: center; */
     gap: 16px;
     color: #e6edf3;
 }
 
 h1 { 
   color: #e6edf3; 
+  padding: 20px;
+  margin: 0;
 }
 
 .alert {
@@ -73,6 +51,31 @@ h1 {
     line-height: 1.6;
     color: #e6edf3;
 }
+
+/* [id^="autobahn-closures-"]:not(:last-child) {
+    border-right: 2px solid #e6edf3;
+    margin-right: 8px;
+    padding-right: 12px;
+} */
+/* Autobahn-Sperrungen nebeneinander */
+/* #autobahn-closures {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: start;
+    align-items: flex-start;
+    margin-top: 24px;
+}
+
+[id^="autobahn-closures-"] {
+    min-width: 220px;
+    max-width: 320px;
+    flex: 1 1 220px;
+    background: none;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 0;
+} */
 
 #feedback {
     background-color: #001E4B;

@@ -11,7 +11,7 @@ function showCurrentClosures(autobahn) {
       const closures = Array.isArray(data.closure) ? data.closure : [];
       // Filtere nur aktuelle Sperrungen (future === false)
       const active = closures.filter(item => item && item.future === false);
-      const relevanteStichwoerter = ["Mainz", "Rüsselsheim", "Wiesbaden", "Darmstadt", "Raunheim", "Groß-Gerau", "Büttelborn", "Bischofsheim", "Mörfelden", "Langen", "Weiterstadt", "Ginsheim-Gustavsburg"];
+      const relevanteStichwoerter = ["Mainz", "Rüsselsheim", "Wiesbaden", "Darmstadt", "Raunheim", "Groß-Gerau", "Büttelborn", "Bischofsheim", "Mörfelden-Walldorf", "Mörfelden", "Walldorf", "Langen", "Weiterstadt", "Ginsheim-Gustavsburg", "Mainz -> Wiesbaden"];
       const relevant = active.filter(item =>
         relevanteStichwoerter.some(kw =>
           (item.title && item.title.includes(kw)) ||
@@ -33,10 +33,10 @@ function showCurrentClosures(autobahn) {
         }
       }
       if (el) {
-        el.innerHTML = `<h3>${autobahn}</h3>`;
         if (relevant.length === 0) {
-          el.innerHTML += "Keine aktuellen Sperrungen.";
+          // el.innerHTML += "Keine aktuellen Sperrungen.";
         } else {
+          //el.innerHTML = `<h3>${autobahn}</h3>`;
           el.innerHTML += relevant.map(item => {
             let beginn = '';
             let ende = '';
@@ -45,9 +45,9 @@ function showCurrentClosures(autobahn) {
               ende = item.description[2];   // Zeile 3: Ende
             }
             return `<div>
-              <strong>${item.title || "Sperrung"}</strong><br>
+              <strong>${item.title || "Sperrung"}</strong><!-- <br> -->
               ${item.subtitle ? item.subtitle + '<br>' : ''}
-              ${beginn ? '<b>' + beginn + '</b><br>' : ''}
+              ${beginn ? '<b>' + beginn + '</b><!-- <br> -->' : ''}
               ${ende ? '<b>' + ende + '</b><br>' : ''}
             </div>`;
           }).join("<hr>");
