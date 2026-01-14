@@ -46,6 +46,14 @@ h1 {
     color: #e6edf3;
 }
 
+#nina a {
+    color: #e6edf3;
+}
+
+/* #nina .border-top {
+    border-top-color: rgba(230, 237, 243, 0.25) !important;
+} */
+
 #autobahn-closures {
     /* font-size: 25px; */
     line-height: 1.6;

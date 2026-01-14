@@ -68,6 +68,15 @@ Spruch des Tages;Ein guter Tag, um den Kollegen daran zu erinnern, dass 'gleich 
 ## Lokal starten
 Da `fetch` genutzt wird, sollte die Seite über einen lokalen Webserver geöffnet werden (nicht via `file://`).
 
+### Empfehlung (wegen NINA/CORS)
+Für die NINA-API ist im Browser oft ein **CORS-Problem** vorhanden, wenn direkt `warnung.bund.de` abgefragt wird. In diesem Repo gibt es deshalb einen kleinen Proxy-Server.
+
+- Node.js (empfohlen):
+  ```bash
+  node server.js
+  ```
+  Öffne dann: http://localhost:8000
+
 - Python (3.x):
   ```bash
   python3 -m http.server 8000
